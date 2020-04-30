@@ -5,9 +5,11 @@ This Ansible Role aims to make deploying a Tezos baker fast and easy for Ansible
 
 The role is heavily parameterized, allowing users to deploy nodes for different Tezos networks (mainnet/carthagenet/labnet/etc..) and various economic protocols to support block transitions.
 
-The role uses [Version 7 of the Tezos Node][tezosv7], also known as the multinetwork node.
+The role uses [Version 7 of the Tezos Node][tezos_v7], also known as the multinetwork node.
 
 _This role does not manage any Tezos keys_
+
+https://galaxy.ansible.com/ecadlabs/tezos_baker
 
 Requirements
 ------------
