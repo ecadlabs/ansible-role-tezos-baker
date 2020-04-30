@@ -17,4 +17,6 @@ galaxy_info:
   galaxy_tags: ['blockchain', 'tezos']
 
 dependencies:
-  - role: ecadlabs.tezos_node
+  # update this when https://github.com/ansible/galaxy/issues/2367 is complete
+  - role: jevonearth.tezos_node
+  # - role: ecadlabs.tezos_node
