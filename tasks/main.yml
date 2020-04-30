@@ -60,5 +60,5 @@
       --addr "{{ tezos_network }}_node" --port "{{ RPC_PORT_INTERNAL }}"
       run
     volumes:
-      - "/data/{{ client_data_dir }}:/data/client"
+      - "{{ client_data_dir }}:/data/client"
   with_items: "{{ tezos_economic_protocols }}"
