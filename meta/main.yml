@@ -1,0 +1,20 @@
+galaxy_info:
+  role_name: tezos_baker
+  author: Jev Bjorsell
+  description: Set-up a Tezos Baker using Ansible
+  company: ECAD Labs Inc.
+  issue_tracker_url: https://github.com/ecadlabs/ansible-role-tezos-baker/issues
+
+  license: MIT
+
+  min_ansible_version: 2.4
+
+  platforms:
+  - name: Debian
+    versions:
+    - buster
+
+  galaxy_tags: ['blockchain', 'tezos']
+
+dependencies:
+  - role: ecadlabs.tezos_node

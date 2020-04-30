@@ -1,0 +1,64 @@
+---
+
+# tasks file for roles/tezos_baker
+
+- name: Tezos baker container
+  ignore_errors: yes
+  docker_container:
+    name: "{{ tezos_network }}_baker_{{ item }}"
+    image: "{{ tezos_docker_image }}"
+    state: started
+    recreate: yes
+    restart: yes
+    restart_policy: always
+    pull: yes
+    networks:
+      - name: "{{ tezos_network }}"
+    entrypoint: >
+      tezos-baker-{{ item }} --chain main --base-dir "/data/client"
+      --addr "{{ tezos_network }}_node" --port "{{ RPC_PORT_INTERNAL }}"
+      run with local node /data/node
+    volumes:
+      - "{{ node_data_dir }}:/data/node"
+      - "{{ client_data_dir }}:/data/client"
+  with_items: "{{ tezos_economic_protocols }}"
+
+- name: Tezos endorser container
+  ignore_errors: yes
+  docker_container:
+    name: "{{ tezos_network }}_endorser_{{ item }}"
+    image: "{{ tezos_docker_image }}"
+    state: started
+    recreate: yes
+    restart: yes
+    restart_policy: always
+    pull: yes
+    networks:
+      - name: "{{ tezos_network }}"
+    entrypoint: >
+      tezos-endorser-{{ item }}  --chain main --base-dir "/data/client"
+      --addr "{{ tezos_network }}_node" --port "{{ RPC_PORT_INTERNAL }}"
+      run
+    volumes:
+      - "{{ client_data_dir }}:/data/client"
+  with_items: "{{ tezos_economic_protocols }}"
+
+- name: Tezos accuser container
+  ignore_errors: yes
+  docker_container:
+    name: "{{ tezos_network }}_accuser_{{ item }}"
+    image: "{{ tezos_docker_image }}"
+    state: started
+    recreate: yes
+    restart: yes
+    restart_policy: always
+    pull: yes
+    networks:
+      - name: "{{ tezos_network }}"
+    entrypoint: >
+      tezos-accuser-{{ item }} --chain main --base-dir "/data/client"
+      --addr "{{ tezos_network }}_node" --port "{{ RPC_PORT_INTERNAL }}"
+      run
+    volumes:
+      - "/data/{{ client_data_dir }}:/data/client"
+  with_items: "{{ tezos_economic_protocols }}"

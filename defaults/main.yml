@@ -1,0 +1,16 @@
+---
+# defaults file for roles/tezos_baker
+
+NODE_RPC_PORT: 8732
+
+tezos_docker_image: tezos/tezos:v7.0-rc1
+
+node_data_dir: "/srv/tezos/{{ tezos_network }}_node"
+client_data_dir: "/srv/tezos/{{ tezos_network }}_client"
+
+# The port that the Tezos RPC process listens on internally
+RPC_PORT_INTERNAL: 8732
+
+# Bakers operate two protocols prior to a protocol transition or user activeated upgrade
+tezos_economic_protocols: 
+  - 006-PsCARTHA
