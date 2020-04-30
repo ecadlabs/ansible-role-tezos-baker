@@ -64,5 +64,5 @@ Author Information
 
 Created by the humans from ECAD Labs Inc. https://ecadlabs.com
 
-[tezos_node_role]: https://galaxy.ansible.com/jevonearth/tezos_node
+[tezos_node_role]: https://galaxy.ansible.com/ecadlabs/tezos_node
 [tezos_v7]: https://tezos.gitlab.io/releases/version-7.html
