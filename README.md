@@ -20,7 +20,7 @@ Requirements
 Installation
 ------------
 
-    ansible-galaxy install ecadlabs.tezos_node
+    ansible-galaxy install ecadlabs.tezos_baker
 
 Role Variables
 --------------
