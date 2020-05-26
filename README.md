@@ -20,7 +20,7 @@ Requirements
 Installation
 ------------
 
-    ansible-galaxy install ecadlabs.tezos_node
+    ansible-galaxy install ecadlabs.tezos_baker
 
 Role Variables
 --------------
@@ -53,7 +53,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-        - role: ecadlabs.tezos_node
+        - role: ecadlabs.tezos_baker
           tezos_network: carthagenet
 
 License
