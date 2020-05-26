@@ -15,12 +15,12 @@
     networks:
       - name: "{{ tezos_network }}"
     entrypoint: >
-      tezos-baker-{{ item }} --chain main --base-dir "/data/client"
+      tezos-baker-{{ item }} --chain main --base-dir "/home/tezos/.tezos-client"
       --addr "{{ tezos_network }}_node" --port "{{ RPC_PORT_INTERNAL }}"
       run with local node /data/node
     volumes:
       - "{{ node_data_dir }}:/data/node"
-      - "{{ client_data_dir }}:/data/client"
+      - "{{ client_data_dir }}:/home/tezos/.tezos-client"
   with_items: "{{ tezos_economic_protocols }}"
 
 - name: Tezos endorser container
@@ -36,11 +36,11 @@
     networks:
       - name: "{{ tezos_network }}"
     entrypoint: >
-      tezos-endorser-{{ item }}  --chain main --base-dir "/data/client"
+      tezos-endorser-{{ item }}  --chain main --base-dir "/home/tezos/.tezos-client"
       --addr "{{ tezos_network }}_node" --port "{{ RPC_PORT_INTERNAL }}"
       run
     volumes:
-      - "{{ client_data_dir }}:/data/client"
+      - "{{ client_data_dir }}:/home/tezos/.tezos-client"
   with_items: "{{ tezos_economic_protocols }}"
 
 - name: Tezos accuser container
@@ -56,9 +56,9 @@
     networks:
       - name: "{{ tezos_network }}"
     entrypoint: >
-      tezos-accuser-{{ item }} --chain main --base-dir "/data/client"
+      tezos-accuser-{{ item }} --chain main --base-dir "/home/tezos/.tezos-client"
       --addr "{{ tezos_network }}_node" --port "{{ RPC_PORT_INTERNAL }}"
       run
     volumes:
-      - "{{ client_data_dir }}:/data/client"
+      - "{{ client_data_dir }}:/home/tezos/.tezos-client"
   with_items: "{{ tezos_economic_protocols }}"
