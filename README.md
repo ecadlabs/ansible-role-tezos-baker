@@ -41,7 +41,13 @@ The location on the host where the Tezos client configuration will reside. This 
 
 The tezos docker image to use.
 
-    tezos_docker_image: tezos/tezos:v7.0-rc1
+    tezos_docker_image: tezos/tezos:v7.4
+
+The Tezos economic protocol to run. Around the time of a protocol transition, bakers should run both protocols in parallel. A backer, endorser and accuser docker container will be started for each protocol.
+
+    tezos_economic_protocols:
+      - 006-PsCARTHA
+      - 007-PsDELPH1
 
 Dependencies
 ------------
