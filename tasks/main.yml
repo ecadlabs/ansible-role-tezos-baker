@@ -16,7 +16,7 @@
       - name: "{{ tezos_network }}"
     entrypoint: >
       tezos-baker-{{ item }} --chain main --base-dir "/home/tezos/.tezos-client"
-      --addr "{{ tezos_network }}_node" --port "{{ RPC_PORT_INTERNAL }}"
+      --endpoint "{{ node_rpc_url }}"
       run with local node /data/node
     volumes:
       - "{{ node_data_dir }}:/data/node"
@@ -37,7 +37,7 @@
       - name: "{{ tezos_network }}"
     entrypoint: >
       tezos-endorser-{{ item }}  --chain main --base-dir "/home/tezos/.tezos-client"
-      --addr "{{ tezos_network }}_node" --port "{{ RPC_PORT_INTERNAL }}"
+      --endpoint "{{ node_rpc_url }}"
       run
     volumes:
       - "{{ client_data_dir }}:/home/tezos/.tezos-client"
@@ -57,7 +57,7 @@
       - name: "{{ tezos_network }}"
     entrypoint: >
       tezos-accuser-{{ item }} --chain main --base-dir "/home/tezos/.tezos-client"
-      --addr "{{ tezos_network }}_node" --port "{{ RPC_PORT_INTERNAL }}"
+      --endpoint "{{ node_rpc_url }}"
       run
     volumes:
       - "{{ client_data_dir }}:/home/tezos/.tezos-client"
