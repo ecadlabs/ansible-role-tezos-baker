@@ -15,5 +15,4 @@ RPC_PORT_INTERNAL: 8732
 
 # Bakers operate two protocols prior to a protocol transition or user activeated upgrade
 tezos_economic_protocols: 
-  - 007-PsDELPH1
   - 008-PtEdo2Zk

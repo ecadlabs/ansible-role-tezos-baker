@@ -3,9 +3,9 @@ Ansible Role for Tezos Baking
 
 This Ansible Role aims to make deploying a Tezos baker fast and easy for Ansible users.
 
-The role is heavily parameterized, allowing users to deploy nodes for different Tezos networks (mainnet/carthagenet/labnet/etc..) and various economic protocols to support block transitions.
+The role is heavily parameterized, allowing users to deploy nodes for different Tezos networks (mainnet/edonet/florencenet/etc..) and various economic protocols to support block transitions.
 
-The role uses [Version 7 of the Tezos Node][tezos_v7], also known as the multinetwork node.
+The role has been tested against [Version 8 of the Tezos Node][tezos_v8].
 
 _This role does not manage any Tezos keys_
 
@@ -41,13 +41,13 @@ The location on the host where the Tezos client configuration will reside. This 
 
 The tezos docker image to use.
 
-    tezos_docker_image: tezos/tezos:v7.4
+    tezos_docker_image: tezos/tezos:v8.2
 
 The Tezos economic protocol to run. Around the time of a protocol transition, bakers should run both protocols in parallel. A backer, endorser and accuser docker container will be started for each protocol.
 
     tezos_economic_protocols:
-      - 006-PsCARTHA
-      - 007-PsDELPH1
+      - 008-PtEdo2Zk
+      - 009-PsFLoren
 
 Dependencies
 ------------
