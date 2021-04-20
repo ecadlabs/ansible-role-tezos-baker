@@ -60,7 +60,7 @@ Example Playbook
     - hosts: servers
       roles:
         - role: ecadlabs.tezos_baker
-          tezos_network: carthagenet
+          tezos_network: mainnet
 
 License
 -------
@@ -73,4 +73,4 @@ Author Information
 Created by the humans from ECAD Labs Inc. https://ecadlabs.com
 
 [tezos_node_role]: https://galaxy.ansible.com/ecadlabs/tezos_node
-[tezos_v7]: https://tezos.gitlab.io/releases/version-7.html
+[tezos_v8]: https://tezos.gitlab.io/releases/version-8.html
