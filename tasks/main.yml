@@ -2,10 +2,22 @@
 
 # tasks file for roles/tezos_baker
 
+- name: change tezos_network variable
+  set_fact:
+    network_name: "{{ tezos_network | regex_search('([^/]*)$') }}"
+  when: '"http" in tezos_network'
+
+- name: change node and client directory names
+  set_fact:
+    node_data_dir: "/srv/tezos/{{ network_name }}_node"
+    client_data_dir: "/srv/tezos/{{ network_name }}_client"
+    node_rpc_url: "{% if node_rpc_url is defined %}{{ node_rpc_url }}{% else %}http://{{ network_name }}_node:{{ RPC_PORT_INTERNAL }}{% endif %}"
+  when: network_name is defined
+
 - name: Tezos baker container
   ignore_errors: yes
   docker_container:
-    name: "{{ deployment_name }}_baker_{{ item }}"
+    name: "{% if network_name is defined %}{{ network_name }}{% else %}{{ tezos_network }}{% endif %}_baker_{{ item }}"
     image: "{{ tezos_docker_image }}"
     state: started
     recreate: yes
@@ -13,7 +25,7 @@
     restart_policy: always
     pull: yes
     networks:
-      - name: "{{ deployment_name }}"
+      - name: "{% if network_name is defined %}{{ network_name }}{% else %}{{ tezos_network }}{% endif %}"
     entrypoint: >
       tezos-baker-{{ item }} --chain main --base-dir "/home/tezos/.tezos-client"
       --endpoint "{{ node_rpc_url }}"
@@ -26,7 +38,7 @@
 - name: Tezos endorser container
   ignore_errors: yes
   docker_container:
-    name: "{{ deployment_name }}_endorser_{{ item }}"
+    name: "{% if network_name is defined %}{{ network_name }}{% else %}{{ tezos_network }}{% endif %}_endorser_{{ item }}"
     image: "{{ tezos_docker_image }}"
     state: started
     recreate: yes
@@ -34,7 +46,7 @@
     restart_policy: always
     pull: yes
     networks:
-      - name: "{{ deployment_name }}"
+      - name: "{% if network_name is defined %}{{ network_name }}{% else %}{{ tezos_network }}{% endif %}"
     entrypoint: >
       tezos-endorser-{{ item }}  --chain main --base-dir "/home/tezos/.tezos-client"
       --endpoint "{{ node_rpc_url }}"
@@ -46,7 +58,7 @@
 - name: Tezos accuser container
   ignore_errors: yes
   docker_container:
-    name: "{{ deployment_name }}_accuser_{{ item }}"
+    name: "{% if network_name is defined %}{{ network_name }}{% else %}{{ tezos_network }}{% endif %}_accuser_{{ item }}"
     image: "{{ tezos_docker_image }}"
     state: started
     recreate: yes
@@ -54,7 +66,7 @@
     restart_policy: always
     pull: yes
     networks:
-      - name: "{{ deployment_name }}"
+      - name: "{% if network_name is defined %}{{ network_name }}{% else %}{{ tezos_network }}{% endif %}"
     entrypoint: >
       tezos-accuser-{{ item }} --chain main --base-dir "/home/tezos/.tezos-client"
       --endpoint "{{ node_rpc_url }}"
