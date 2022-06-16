@@ -3,7 +3,8 @@
 
 NODE_RPC_PORT: 8732
 
-tezos_docker_image: tezos/tezos:v9.4
+octez_version: v13.0
+tezos_docker_image: "tezos/tezos:{{ octez_version }}"
 
 node_data_dir: "/srv/tezos/{{ tezos_network }}_node"
 client_data_dir: "/srv/tezos/{{ tezos_network }}_client"
@@ -15,4 +16,4 @@ RPC_PORT_INTERNAL: 8732
 
 # Bakers operate two protocols prior to a protocol transition or user activeated upgrade
 tezos_economic_protocols: 
-  - 009-PsFLoren
+  - 012-Psithaca
