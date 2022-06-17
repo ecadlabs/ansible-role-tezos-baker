@@ -14,6 +14,6 @@ node_rpc_url: "http://{{ tezos_network }}_node:{{ RPC_PORT_INTERNAL }}"
 # The port that the Tezos RPC process listens on internally
 RPC_PORT_INTERNAL: 8732
 
-# Bakers operate two protocols prior to a protocol transition or user activeated upgrade
+# Bakers operate two protocols prior to a protocol transition or user activated upgrade
 tezos_economic_protocols: 
   - 012-Psithaca
