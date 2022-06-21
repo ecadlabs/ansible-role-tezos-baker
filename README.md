@@ -3,9 +3,9 @@ Ansible Role for Tezos Baking
 
 This Ansible Role aims to make deploying a Tezos baker fast and easy for Ansible users.
 
-The role is heavily parameterized, allowing users to deploy nodes for different Tezos networks (mainnet/edonet/florencenet/etc..) and various economic protocols to support block transitions.
+The role is heavily parameterized, allowing users to deploy nodes for different Tezos networks (mainnet/ithacanet/jakartanet/etc..) and various economic protocols to support block transitions.
 
-The role has been tested against [Version 8 of the Tezos Node][tezos_v8].
+The role has been tested against [Version 13 of the Tezos Node][tezos_v13].
 
 _This role does not manage any Tezos keys_
 
@@ -27,7 +27,7 @@ Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-The Tezos network you wish to provision. This variable does not have a default, so you must set it. Typically, values are `carthagenet` or `mainnet`. The `tezos_network` value is used for several purposes; naming of docker containers, naming of a docker network, selection of which Tezos network to use, and validating that snapshot imports are from the expected network
+The Tezos network you wish to provision. This variable does not have a default, so you must set it. Typically, values are `jakartanet` or `mainnet`. The `tezos_network` value is used for several purposes; naming of docker containers, naming of a docker network, selection of which Tezos network to use, and validating that snapshot imports are from the expected network
 
     tezos_network:
 
@@ -41,13 +41,13 @@ The location on the host where the Tezos client configuration will reside. This 
 
 The tezos docker image to use.
 
-    tezos_docker_image: tezos/tezos:v9.4
+    octez_version: v13.0
 
-The Tezos economic protocol to run. Around the time of a protocol transition, bakers should run both protocols in parallel. A backer, endorser and accuser docker container will be started for each protocol.
+The Tezos economic protocol to run. Around the time of a protocol transition, bakers should run both protocols in parallel. A baker and accuser docker container will be started for each protocol.
 
     tezos_economic_protocols:
-      - 008-PtEdo2Zk
-      - 009-PsFLoren
+      - 011-PtHangz2
+      - 012-Psithaca
 
 Dependencies
 ------------
@@ -73,4 +73,4 @@ Author Information
 Created by the humans from ECAD Labs Inc. https://ecadlabs.com
 
 [tezos_node_role]: https://galaxy.ansible.com/ecadlabs/tezos_node
-[tezos_v8]: https://tezos.gitlab.io/releases/version-8.html
+[tezos_v13]: https://tezos.gitlab.io/releases/version-13.html

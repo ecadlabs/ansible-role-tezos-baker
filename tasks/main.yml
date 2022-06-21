@@ -23,26 +23,6 @@
       - "{{ client_data_dir }}:/home/tezos/.tezos-client"
   with_items: "{{ tezos_economic_protocols }}"
 
-- name: Tezos endorser container
-  ignore_errors: yes
-  docker_container:
-    name: "{{ tezos_network }}_endorser_{{ item }}"
-    image: "{{ tezos_docker_image }}"
-    state: started
-    recreate: yes
-    restart: yes
-    restart_policy: always
-    pull: yes
-    networks:
-      - name: "{{ tezos_network }}"
-    entrypoint: >
-      tezos-endorser-{{ item }}  --chain main --base-dir "/home/tezos/.tezos-client"
-      --endpoint "{{ node_rpc_url }}"
-      run
-    volumes:
-      - "{{ client_data_dir }}:/home/tezos/.tezos-client"
-  with_items: "{{ tezos_economic_protocols }}"
-
 - name: Tezos accuser container
   ignore_errors: yes
   docker_container:
