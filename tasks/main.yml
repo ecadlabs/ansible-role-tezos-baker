@@ -23,28 +23,9 @@
       --chain main
       --endpoint "{{ node_rpc_url }}"
       run with local node /home/tezos/.tezos-node
-    volumes_from:
-      - "{{ network_name }}_node_volumes"
-  when: item not in ["alpha", "013-PtJakart"]
-  with_items: "{{ tezos_economic_protocols }}"
-
-- name: Tezos baker Jakarta or alpha container
-  docker_container:
-    name: "{{ network_name }}_baker_{{ item }}"
-    image: "{{ tezos_docker_image }}"
-    state: "{{ enable_baker | ternary('started', 'absent') }}"
-    restart_policy: always
-    networks:
-      - name: "{{ network_name }}"
-    entrypoint: tezos-baker-{{ item }}
-    command: >-
-      --chain main
-      --endpoint "{{ node_rpc_url }}"
-      run with local node /home/tezos/.tezos-node
       --liquidity-baking-toggle-vote pass
     volumes_from:
       - "{{ network_name }}_node_volumes"
-  when: item == "alpha" or item == "013-PtJakart" or item == "014-PtKathma"
   with_items: "{{ tezos_economic_protocols }}"
 
 - name: Tezos accuser container
