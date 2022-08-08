@@ -2,43 +2,45 @@
 
 # tasks file for roles/tezos_baker
 
+- name: set network_name variable from tezos_network
+  set_fact:
+    network_name: "{{ tezos_network | basename }}"
+
+- name: change node and client directory names
+  set_fact:
+    node_rpc_url: "{% if node_rpc_url is defined %}{{ node_rpc_url }}{% else %}http://{{ network_name }}_node:{{ RPC_PORT_INTERNAL }}{% endif %}"
+
 - name: Tezos baker container
-  ignore_errors: yes
   docker_container:
-    name: "{{ tezos_network }}_baker_{{ item }}"
+    name: "{{ network_name }}_baker_{{ item }}"
     image: "{{ tezos_docker_image }}"
-    state: started
-    recreate: yes
-    restart: yes
+    state: "{{ enable_baker | ternary('started', 'absent') }}"
     restart_policy: always
-    pull: yes
     networks:
-      - name: "{{ tezos_network }}"
-    entrypoint: >
-      tezos-baker-{{ item }} --chain main --base-dir "/home/tezos/.tezos-client"
+      - name: "{{ network_name }}"
+    entrypoint: tezos-baker-{{ item }}
+    command: >-
+      --chain main
       --endpoint "{{ node_rpc_url }}"
-      run with local node /data/node
-    volumes:
-      - "{{ node_data_dir }}:/data/node"
-      - "{{ client_data_dir }}:/home/tezos/.tezos-client"
+      run with local node /home/tezos/.tezos-node
+      --liquidity-baking-toggle-vote pass
+    volumes_from:
+      - "{{ network_name }}_node_volumes"
   with_items: "{{ tezos_economic_protocols }}"
 
 - name: Tezos accuser container
-  ignore_errors: yes
   docker_container:
-    name: "{{ tezos_network }}_accuser_{{ item }}"
+    name: "{{ network_name }}_accuser_{{ item }}"
     image: "{{ tezos_docker_image }}"
-    state: started
-    recreate: yes
-    restart: yes
+    state: "{{ enable_accuser | ternary('started', 'absent') }}"
     restart_policy: always
-    pull: yes
     networks:
-      - name: "{{ tezos_network }}"
-    entrypoint: >
-      tezos-accuser-{{ item }} --chain main --base-dir "/home/tezos/.tezos-client"
+      - name: "{{ network_name }}"
+    entrypoint: tezos-accuser-{{ item }}
+    command: >-
+      --chain main
       --endpoint "{{ node_rpc_url }}"
       run
-    volumes:
-      - "{{ client_data_dir }}:/home/tezos/.tezos-client"
+    volumes_from:
+      - "{{ network_name }}_node_volumes"
   with_items: "{{ tezos_economic_protocols }}"
