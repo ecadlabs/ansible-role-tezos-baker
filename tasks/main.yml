@@ -12,21 +12,19 @@
 
 - name: Tezos baker container
   docker_container:
-    name: "{{ network_name }}_baker_{{ item }}"
+    name: "{{ network_name }}_baker_{{ item[0] }}_{{ item[1] }}"
     image: "{{ tezos_docker_image }}"
     state: "{{ enable_baker | ternary('started', 'absent') }}"
     restart_policy: always
     networks:
       - name: "{{ network_name }}"
-    entrypoint: tezos-baker-{{ item }}
+    entrypoint: "tezos-baker-{{ item[0] }}"
     command: >-
-      --chain main
-      --endpoint "{{ node_rpc_url }}"
-      run with local node /home/tezos/.tezos-node
+      run with local node /home/tezos/.tezos-node "{{ item[1] }}"
       --liquidity-baking-toggle-vote pass
     volumes_from:
       - "{{ network_name }}_node_volumes"
-  with_items: "{{ tezos_economic_protocols }}"
+  loop: "{{ tezos_economic_protocols | product(tezos_baker_accounts) | list }}" # Nested Ansible loop
 
 - name: Tezos accuser container
   docker_container:
@@ -38,8 +36,6 @@
       - name: "{{ network_name }}"
     entrypoint: tezos-accuser-{{ item }}
     command: >-
-      --chain main
-      --endpoint "{{ node_rpc_url }}"
       run
     volumes_from:
       - "{{ network_name }}_node_volumes"

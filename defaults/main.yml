@@ -8,10 +8,10 @@ tezos_docker_image: "tezos/tezos:{{ octez_version }}"
 enable_baker: true
 enable_accuser: true
 
+tezos_baker_accounts: []
+
 node_data_dir: "/srv/tezos/{{ tezos_network }}_node"
 client_data_dir: "/srv/tezos/{{ tezos_network }}_client"
-
-node_rpc_url: "http://{{ tezos_network }}_node:{{ RPC_PORT_INTERNAL }}"
 
 # The port that the Tezos RPC process listens on internally
 RPC_PORT_INTERNAL: 8732
