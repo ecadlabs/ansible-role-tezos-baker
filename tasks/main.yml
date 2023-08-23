@@ -22,6 +22,7 @@
     command: >-
       run with local node /home/tezos/.tezos-node "{{ item[1] }}"
       --liquidity-baking-toggle-vote pass
+      {% if network_name == "oxfordnet" %}--adaptive-issuance-vote on{% else %}{% endif %}
     volumes_from:
       - "{{ network_name }}_node_volumes"
   loop: "{{ tezos_economic_protocols | product(tezos_baker_accounts) | list }}" # Nested Ansible loop
