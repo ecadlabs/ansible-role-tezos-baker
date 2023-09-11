@@ -18,7 +18,7 @@
     restart_policy: always
     networks:
       - name: "{{ network_name }}"
-    entrypoint: "tezos-baker-{{ item[0] }}"
+    entrypoint: "octez-baker-{{ item[0] }}"
     command: >-
       run with local node /home/tezos/.tezos-node "{{ item[1] }}"
       --liquidity-baking-toggle-vote pass
